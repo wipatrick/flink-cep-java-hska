@@ -1,0 +1,35 @@
+zookeeper:
+  image: jplock/zookeeper:3.4.6
+  ports:
+    - "2181:2181"
+kafka:
+  image: ches/kafka:0.9.0.0
+  ports:
+    - "9092:9092"
+    - "7203:7203"
+  links:
+    - zookeeper:zookeeper
+jobmanager:
+  image: wipa/flink
+  ports:
+    - "48080:8080"
+    - "48081:8081"
+    - "220:22"
+  expose:
+    - "6123"
+    - "22"
+  command: /usr/local/flink/bin/config-flink.sh jobmanager
+  links:
+    - kafka:kafka
+    - zookeeper:zookeeper
+taskmanager:
+  image: wipa/flink
+  ports:
+    - "22"
+  expose:
+    - "6121"
+    - "6122"
+  links:
+    - jobmanager:jobmanager
+    - kafka:kafka
+    - zookeeper:zookeeper
