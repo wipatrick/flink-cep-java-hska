@@ -22,7 +22,7 @@ jobmanager:
     - "6123"
     - "22"
   volumes:
-    - ./target/flink-cep-hska-1.0-SNAPSHOT.jar:/home/flink-cep-hska-1.0-SNAPSHOT.jar
+    - ./flink/target/flink-cep-hska-1.0-SNAPSHOT.jar:/home/flink-cep-hska-1.0-SNAPSHOT.jar
     - ./script/deployjob.sh:/home/deploy.sh
   command: /usr/local/flink/bin/config-flink.sh jobmanager
   links:
