@@ -1,11 +1,13 @@
 zookeeper:
   image: jplock/zookeeper:3.4.6
   restart: always
+  hostname: zookeeper
   ports:
     - "2181:2181"
 kafka:
   image: ches/kafka:0.9.0.0
   restart: always
+  hostname: kafka
   ports:
     - "9092:9092"
     - "7203:7203"
@@ -14,6 +16,7 @@ kafka:
 jobmanager:
   image: wipa/flink:1.0.3
   restart: always
+  hostname: jobmanager
   ports:
     - "48080:8080"
     - "48081:8081"
@@ -22,7 +25,7 @@ jobmanager:
     - "6123"
     - "22"
   volumes:
-    - ./flink/target/flink-cep-hska-1.0-SNAPSHOT.jar:/home/flink-cep-hska-1.0-SNAPSHOT.jar
+    - ./target/flink-cep-hska-1.0-SNAPSHOT.jar:/home/flink-cep-hska-1.0-SNAPSHOT.jar
     - ./script/deployjob.sh:/home/deploy.sh
   command: /usr/local/flink/bin/config-flink.sh jobmanager
   links:
@@ -31,6 +34,7 @@ jobmanager:
 taskmanager:
   image: wipa/flink:1.0.3
   restart: always
+  hostname: taskmanager
   ports:
     - "22"
   expose:
